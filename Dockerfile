@@ -17,9 +17,11 @@
 
 FROM nginx
 
-MAINTAINER Evan Brown <evanbrown@google.com>
+MAINTAINER Chris Mague <chris.mague@shokunin.co>
 
-RUN rm /etc/nginx/conf.d/*.conf
+RUN 	rm /etc/nginx/conf.d/*.conf && mkdir -p /logs/nginx && \
+	apt update && apt -y install curl telnet tcpdump jq
+	
 
 WORKDIR /usr/src
 
