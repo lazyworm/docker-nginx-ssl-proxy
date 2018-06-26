@@ -80,7 +80,7 @@ To run an SSL termination proxy you must have an existing SSL certificate and ke
  ## Other env vars:
 
   - **SERVER_NAME**
-    If set, this must be provided and will be set as the value in the
+    If set, there will be no default configuration and the server name will be set to _
     `server_name` directive.
   - **WEB_SOCKETS**
     If set, `Connection` and `Upgrade` headers will be set on the request to

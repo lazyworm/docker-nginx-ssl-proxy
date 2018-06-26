@@ -16,11 +16,17 @@
 if [ -n "${ENABLE_SSL+1}" ] && [ "${ENABLE_SSL,,}" = "true" ]; then
   echo "Enabling SSL..."
   cp /usr/src/proxy_ssl.conf /etc/nginx/conf.d/proxy.conf
-  cp /usr/src/default_ssl.conf /etc/nginx/conf.d/default.conf
+  # If the server name is unset then we don't want a deafult
+  if [ "${SERVER_NAME}X" != "X" ] ; then
+    cp /usr/src/default_ssl.conf /etc/nginx/conf.d/default.conf
+  fi
 else
   # No SSL
   cp /usr/src/proxy_nossl.conf /etc/nginx/conf.d/proxy.conf
-  cp /usr/src/default_nossl.conf /etc/nginx/conf.d/default.conf
+  # If the server name is unset then we don't want a deafult
+  if [ "${SERVER_NAME}X" != "X" ] ; then
+    cp /usr/src/default_ssl.conf /etc/nginx/conf.d/default.conf
+  fi
 fi
 
 # If an htpasswd file is provided, download and configure nginx
@@ -64,7 +70,11 @@ fi
 sed -i "s|{{TARGET_SERVICE}}|${TARGET_SERVICE}|" /etc/nginx/conf.d/proxy.conf
 
 # Tell nginx the name of the service
-sed -i "s/{{SERVER_NAME}}/${SERVER_NAME}/g;" /etc/nginx/conf.d/proxy.conf
+if [ "${SERVER_NAME}X" != "X" ] ; then
+	sed -i "s/{{SERVER_NAME}}/${SERVER_NAME}/g;" /etc/nginx/conf.d/proxy.conf
+else
+	sed -i "s/{{SERVER_NAME}}/_/g;" /etc/nginx/conf.d/proxy.conf
+fi
 
 
 echo "Starting nginx..."
