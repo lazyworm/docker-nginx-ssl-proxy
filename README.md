@@ -85,3 +85,6 @@ To run an SSL termination proxy you must have an existing SSL certificate and ke
   - **WEB_SOCKETS**
     If set, `Connection` and `Upgrade` headers will be set on the request to
     the proxy.
+  - **HTTPS_REDIRECT**
+    If set, anything with http in the X-Forwarded-Proto set will get redirected to https
+    note this is only used if https is set off

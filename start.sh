@@ -66,6 +66,10 @@ if [ -n "${WEB_SOCKETS+1}" ]; then
     sed -i "s/#websockets# //g;" /etc/nginx/conf.d/proxy.conf
 fi
 
+if [ -n "${HTTPS_REDIRECT+1}" ]; then
+    sed -i "s/#proto-redir# //g;" /etc/nginx/conf.d/proxy.conf
+fi
+
 # Tell nginx the address and port of the service to proxy to
 sed -i "s|{{TARGET_SERVICE}}|${TARGET_SERVICE}|" /etc/nginx/conf.d/proxy.conf
 
