@@ -23,7 +23,7 @@ if [ -n "${ENABLE_SSL+1}" ] && [ "${ENABLE_SSL,,}" = "true" ]; then
 else
   # No SSL
   cp /usr/src/proxy_nossl.conf /etc/nginx/conf.d/proxy.conf
-  # If the server name is set then we don't want a deafult
+  # If the server name is set then we don't want a default
   if [ "${SERVER_NAME}X" != "X" ] ; then
     cp /usr/src/default_nossl.conf /etc/nginx/conf.d/default.conf
   fi
