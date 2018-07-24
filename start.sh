@@ -25,7 +25,7 @@ else
   cp /usr/src/proxy_nossl.conf /etc/nginx/conf.d/proxy.conf
   # If the server name is unset then we don't want a deafult
   if [ "${SERVER_NAME}X" != "X" ] ; then
-    cp /usr/src/default_ssl.conf /etc/nginx/conf.d/default.conf
+    cp /usr/src/default_nossl.conf /etc/nginx/conf.d/default.conf
   fi
 fi
 
