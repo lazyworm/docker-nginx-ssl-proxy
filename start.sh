@@ -29,6 +29,14 @@ else
   fi
 fi
 
+# If contents of htpasswd is supplied via env, write it out.
+# String should be | (pipe) delimited. e.g. "bob:xxxxxxxxx|mary:yyyyyyyyy|joe:zzzzzzzz"
+if [ -n "${HTPASSWD_CONTENTS+1}" ] ; then
+  echo "Writing out htpasswd entries..."
+  echo "${HTPASSWD_CONTENTS}" | sed 's/|/\n/g' > /etc/secrets/htpasswd
+  chmod 600 /etc/secrets/htpasswd
+fi
+
 # If an htpasswd file is provided, download and configure nginx
 if [ -n "${ENABLE_BASIC_AUTH+1}" ] && [ "${ENABLE_BASIC_AUTH,,}" = "true" ]; then
   echo "Enabling basic auth..."
