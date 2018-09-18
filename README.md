@@ -88,3 +88,6 @@ To run an SSL termination proxy you must have an existing SSL certificate and ke
   - **HTTPS_REDIRECT**
     If set, anything with http in the X-Forwarded-Proto set will get redirected to https
     note this is only used if https is set off
+  - **HTPASSWD_CONTENTS**
+    If set, writes out the contents to /etc/secrets/htpasswd.  This allows usage of basic
+    auth.  Note: entries should be pipe (|) delimited.
