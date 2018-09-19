@@ -33,6 +33,7 @@ fi
 # String should be | (pipe) delimited. e.g. "bob:xxxxxxxxx|mary:yyyyyyyyy|joe:zzzzzzzz"
 if [ -n "${HTPASSWD_CONTENTS+1}" ] ; then
   echo "Writing out htpasswd entries..."
+  mkdir -p /etc/secrets/
   echo "${HTPASSWD_CONTENTS}" | sed 's/|/\n/g' > /etc/secrets/htpasswd
   chmod 600 /etc/secrets/htpasswd
 fi
@@ -88,6 +89,12 @@ else
 	sed -i "s/{{SERVER_NAME}}/_/g;" /etc/nginx/conf.d/proxy.conf
 fi
 
+# Allow listening on alt port
+if [ "${LISTEN_PORT}X" != "X" ] ; then
+  sed -i "s/{{LISTEN_PORT}}/${LISTEN_PORT}/g;" /etc/nginx/conf.d/proxy.conf
+else
+  sed -i "s/{{LISTEN_PORT}}/80/g;" /etc/nginx/conf.d/proxy.conf
+fi
 
 echo "Starting nginx..."
 nginx -g 'daemon off;'
