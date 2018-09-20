@@ -35,6 +35,7 @@ if [ -n "${HTPASSWD_CONTENTS+1}" ] ; then
   echo "Writing out htpasswd entries..."
   mkdir -p /etc/secrets/
   echo "${HTPASSWD_CONTENTS}" | sed 's/|/\n/g' > /etc/secrets/htpasswd
+  chown nginx /etc/secrets/htpasswd
   chmod 600 /etc/secrets/htpasswd
 fi
 
