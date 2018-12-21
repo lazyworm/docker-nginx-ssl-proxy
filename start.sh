@@ -35,6 +35,7 @@ if [ -n "${HTPASSWD_CONTENTS+1}" ] ; then
   echo "Writing out htpasswd entries..."
   mkdir -p /etc/secrets/
   echo "${HTPASSWD_CONTENTS}" | sed 's/|/\n/g' > /etc/secrets/htpasswd
+  chown nginx /etc/secrets/htpasswd
   chmod 600 /etc/secrets/htpasswd
 fi
 
@@ -73,6 +74,10 @@ fi
 
 if [ -n "${WEB_SOCKETS+1}" ]; then
     sed -i "s/#websockets# //g;" /etc/nginx/conf.d/proxy.conf
+fi
+
+if [ -n "${GZIP+1}" ]; then
+    sed -i "s/#GZIP# //g;" /etc/nginx/conf.d/proxy.conf
 fi
 
 if [ -n "${HTTPS_REDIRECT+1}" ]; then
