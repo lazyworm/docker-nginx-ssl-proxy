@@ -76,6 +76,10 @@ if [ -n "${WEB_SOCKETS+1}" ]; then
     sed -i "s/#websockets# //g;" /etc/nginx/conf.d/proxy.conf
 fi
 
+if [ -n "${GZIP+1}" ]; then
+    sed -i "s/#GZIP# //g;" /etc/nginx/conf.d/proxy.conf
+fi
+
 if [ -n "${HTTPS_REDIRECT+1}" ]; then
     sed -i "s/#proto-redir# //g;" /etc/nginx/conf.d/proxy.conf
 fi
