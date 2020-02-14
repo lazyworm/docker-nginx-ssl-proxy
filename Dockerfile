@@ -15,9 +15,9 @@
 #
 # VERSION   0.0.1
 
-FROM nginx
+FROM nginx:stable
 
-MAINTAINER Chris Mague <chris.mague@shokunin.co>
+#MAINTAINER Chris Mague <chris.mague@shokunin.co>
 
 RUN 	rm /etc/nginx/conf.d/*.conf && mkdir -p /logs/nginx && \
 	apt update && apt -y install curl telnet tcpdump jq

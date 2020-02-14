@@ -55,6 +55,15 @@ if [ -n "${SERVICE_PORT_ENV_NAME+1}" ]; then
   TARGET_SERVICE="$TARGET_SERVICE:${!SERVICE_PORT_ENV_NAME}"
 fi
 
+# Specify if we're passing in http or https
+if [ -n "${PASS_HTTPS+1}" ] ; then
+  echo "Proxying passing in HTTPS..."
+  sed -i "s/#PASS-HTTPS# //g;" /etc/nginx/conf.d/proxy.conf
+else
+  echo "Proxying passing in HTTP (default)..."
+  sed -i "s/#PASS-HTTP# //g;" /etc/nginx/conf.d/proxy.conf
+fi
+
 # If the CERT_SERVICE_HOST_ENV_NAME and CERT_SERVICE_PORT_ENV_NAME vars
 # are provided, they point to the env vars set by Kubernetes that contain the
 # actual target address and port of the encryption service. Override the
@@ -92,6 +101,12 @@ if [ "${SERVER_NAME}X" != "X" ] ; then
 	sed -i "s/{{SERVER_NAME}}/${SERVER_NAME}/g;" /etc/nginx/conf.d/proxy.conf
 else
 	sed -i "s/{{SERVER_NAME}}/_/g;" /etc/nginx/conf.d/proxy.conf
+fi
+
+# Allow override of client max body size
+if [ "${CLIENT_MAX_BODY}X" != "X" ] ; then
+  sed -i "s/#client-max-body# //g;" /etc/nginx/conf.d/proxy.conf
+  sed -i "s/{{CLIENT_MAX_BODY}}/${CLIENT_MAX_BODY}/g;" /etc/nginx/conf.d/proxy.conf
 fi
 
 # Allow listening on alt port
