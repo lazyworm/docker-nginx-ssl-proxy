@@ -58,16 +58,16 @@ fi
 # Specify if we're passing in http or https
 if [ -n "${PASS_HTTPS+1}" ] ; then
   echo "Proxying passing in HTTPS..."
-  sed -i "s/#PASS-HTTPS# //g;" /etc/nginx/conf.d/proxy.conf
+  sed -i "s/#PASS_HTTPS# //g;" /etc/nginx/conf.d/proxy.conf
 else
   echo "Proxying passing in HTTP (default)..."
-  sed -i "s/#PASS-HTTP# //g;" /etc/nginx/conf.d/proxy.conf
+  sed -i "s/#PASS_HTTP# //g;" /etc/nginx/conf.d/proxy.conf
 fi
 
 # Resolver changes
 if [ -n "${USE_RESOLVER+1}" ]; then
   echo "Enabling resolver use..."
-  sed -i "s/#USE_RESOLVER# //g;" /etc/nginx/conf.d/proxy.conf
+  sed -i "s/#USE_RESOLVER#//g;" /etc/nginx/conf.d/proxy.conf
   sed -i "s/{{RESOLVER_IP}}/${RESOLVER_IP}/g;" /etc/nginx/conf.d/proxy.conf
 fi
 
