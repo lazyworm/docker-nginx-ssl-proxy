@@ -64,6 +64,15 @@ else
   sed -i "s/#PASS-HTTP# //g;" /etc/nginx/conf.d/proxy.conf
 fi
 
+# Resolver changes
+if [ -n "${USE_RESOLVER+1}" ]; then
+  echo "Enabling resolver use..."
+  sed -i "s/#USE_RESOLVER# //g;" /etc/nginx/conf.d/proxy.conf
+  sed -i "s/{{RESOLVER_IP}}/${RESOLVER_IP}/g;" /etc/nginx/conf.d/proxy.conf
+fi
+
+sed -i "s/{{RESOLVER_STR}}/${RESOLVER_STR}/g;" /etc/nginx/conf.d/proxy.conf
+
 # If the CERT_SERVICE_HOST_ENV_NAME and CERT_SERVICE_PORT_ENV_NAME vars
 # are provided, they point to the env vars set by Kubernetes that contain the
 # actual target address and port of the encryption service. Override the
